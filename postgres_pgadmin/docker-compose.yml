@@ -1,0 +1,40 @@
+version: '3'
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: 'always'
+    container_name: 'pgadmin'
+    volumes:
+      - 'pgadmin_data:/var/lib/pgadmin'
+    networks:
+      - 'postgres'
+    environment:
+      # change email and password
+      PGADMIN_DEFAULT_EMAIL: 'myEmail@gmail.com'
+      PGADMIN_DEFAULT_PASSWORD: 'SuperSecretPassword'
+    ports:
+      - '8080:80'
+
+  postgres:
+    image: postgres
+    restart: 'always'
+    container_name: 'postgres'
+    volumes:
+      - 'pgdata:/var/lib/postgresql/data'
+    networks:
+      - 'postgres'
+    environment:
+      POSTGRES_PASSWORD: 'SuperSecretPassword'
+    ports:
+      - '5432:5432'
+
+networks:
+  postgres:
+    name: 'postgres_network'
+    external: false
+
+volumes:
+  pgadmin_data:
+    name: 'pgadmin_data'
+  pgdata:
+    name: 'pg_data'

@@ -1,0 +1,52 @@
+version: '3'
+
+services:
+  dolibarr:
+    container_name: dolibarr
+    image: upshift/dolibarr:latest
+    restart: always
+    networks:
+      - dolibarr-net
+    volumes:
+      - dolibarr_html:/var/www/html
+      - dolibarr_docs:/var/www/documents
+    environment:
+      - "DOLI_DB_HOST=db"
+      - "DOLI_DB_NAME=dolibarr"
+      - "DOLI_DB_USER=db_user"
+      - "DOLI_DB_PASSWORD=yourpasswordhere"
+      - "DOLI_ADMIN_LOGIN=admin"
+      - "DOLI_ADMIN_PASSWORD=yourpasswordhere"
+    ports:
+      - "8081:80"
+    depends_on:
+      - db
+
+  db:
+    container_name: dolibarr-bd
+    image: mariadb:latest
+    restart: always
+    networks:
+      - dolibarr-net
+    environment:
+      - "MYSQL_RANDOM_ROOT_PASSWORD=yes"
+      - "MYSQL_DATABASE=dolibarr"
+      - "MYSQL_USER=db_user"
+      - "MYSQL_PASSWORD=yourpasswordhere"
+    volumes:
+      - db_data:/var/lib/mysql
+
+networks:
+  dolibarr-net:
+    name: dolibarr-net
+
+volumes:
+  db_data:
+    driver: local
+    name: dolibarr_db_data
+  dolibarr_docs:
+    name: dolibarr_docs
+    driver: local
+  dolibarr_html:
+    name: dolibarr_html
+    driver: local
