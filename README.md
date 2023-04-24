@@ -6,4 +6,4 @@ La finalidad de este repositorio es proporcionar una alternativa usando Docker p
 
 Normalmente, se pide instalar herramientas en el propio PC, usar máquinas virtuales e incluso registrarse en servicios web.
 
-Con esta colección de archivos docker-compose.yml solo hay que instalar docker, elegir el archivo y ejecutar un 'docker compose up'.
+De esta forma solo hay que instalar docker, elegir el archivo y ejecutar un 'docker compose up'.
